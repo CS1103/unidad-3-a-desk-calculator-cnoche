@@ -4,31 +4,29 @@
 #include "error.h"
 #include <iostream>
 
-Lexer::Token_stream ts;
-using namespace Lexer;
-using namespace Error;
 
 namespace Parser{
+    Lexer::Token_stream ts;
     double Parser::prim(bool get) {
         if (get) ts.get(); // read next token
             switch (ts.current().kind) {
-            case Kind::number: { // floating-point constant
+            case Lexer::Kind::number: { // floating-point constant
                 double v = ts.current().number_value;
                 ts.get();
                 return v;
 
             }
-            case Kind::name: {
+            case Lexer::Kind::name: {
                 double& v = Table::table[ts.current().string_value]; // find the corresponding
-                if (ts.get().kind == Kind::assign) 
+                if (ts.get().kind == Lexer::Kind::assign) 
                     v = expr(true); // ’=’ seen: assignment
                     return v;
             }
-            case Kind::minus: // unar y minus
+            case Lexer::Kind::minus: // suma y minus
                 return -prim(true);
-            case Kind::lp: {
+            case Lexer::Kind::lp: {
                 auto e = expr(true);
-                if (ts.current().kind != Kind::rp) 
+                if (ts.current().kind != Lexer::Kind::rp) 
                     return error("')' expected");
                     ts.get(); // eat ’)’
                     return e;
@@ -43,10 +41,10 @@ namespace Parser{
         double left = prim(get);
         for (;;) {
             switch (ts.current().kind) {
-            case Kind::mul:
+            case Lexer::Kind::mul:
                 left *= prim(true);
                 break;
-            case Kind::div:
+            case Lexer::Kind::div:
                 if (auto d = prim(true)) {
                     left /= d;
                     break;
@@ -61,11 +59,11 @@ namespace Parser{
         double left = term(get);
         for (;;) { // ‘‘forever’’
             switch (ts.current().kind) {
-            case Kind::plus:
+            case Lexer::Kind::plus:
                 left += term(true);
                 break;
             
-            case Kind::minus:
+            case Lexer::Kind::minus:
                 left -= term(true);
                 break;
                 default:

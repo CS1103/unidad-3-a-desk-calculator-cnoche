@@ -4,5 +4,5 @@
 #include "table.h"
 
 namespace Table {
-std::map<std::string,double> table;
+    std::map<std::string,double> table;
 }
