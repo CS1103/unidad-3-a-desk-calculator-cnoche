@@ -1,7 +1,13 @@
+#ifndef CALCULADORA_ERROR_H
+#define CALCULADORA_ERROR_H
 #include<iostream>
-#include<sstream>
+#include<string>
 
-namespace Error {
-    extern int no_of_errors;
-    double error(const std::string& s);
+int no_of_errors;
+double error(const std::string& s) { 
+    ++no_of_errors;
+    std::cerr << "Error: " << s << '\n';
+    return 1;
 }
+
+#endif
