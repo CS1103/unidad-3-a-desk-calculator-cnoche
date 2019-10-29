@@ -1,9 +1,10 @@
 #include "lexer.h"
+#include "error.h"
 #include <cctype>
 #include <iostream>
 
 namespace Lexer{
-    Token_stream ts;
+    extern Token_stream ts;
     Token Token_stream::get() {
         char ch = 0;
         *ip>>ch;
@@ -33,13 +34,11 @@ namespace Lexer{
                 ct.kind=Kind::name;
                 return ct;
             }
-            perror("bad token");
+            Error::error("bad token");
             return ct={Kind::print};
         }
     }
-
-
     Token& Token_stream::current() {
-
+        return ct;
     }
 }

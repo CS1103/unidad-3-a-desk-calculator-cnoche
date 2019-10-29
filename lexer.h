@@ -32,7 +32,6 @@ namespace Lexer {
             
             void set_input(std::istream& s) { close(); ip = &s; owns=false; }
             void set_input(std::istream* p) { close(); ip = p; owns = true; }
-        
         private:
             void close() { if (owns) delete ip; }
             
@@ -41,5 +40,4 @@ namespace Lexer {
             
             Token ct {Kind::end}; // current token
     };
-    extern Token_stream ts;
-}
+} 
