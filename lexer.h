@@ -28,8 +28,8 @@ namespace Lexer {
 
     class Token_stream { 
         public:
-            Token_stream(std::istream& s) : ip{&s}, owns{false} { }
-            Token_stream(std::istream* p) : ip{p}, owns{true} { }
+            Token_stream(std::istream& s) : ip{&s}, owns{false}, ct{Kind::END} { }
+            Token_stream(std::istream* p) : ip{p}, owns{true}, ct{Kind::END} { }
             
             ~Token_stream() { close(); }
             
