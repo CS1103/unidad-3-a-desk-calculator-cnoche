@@ -62,11 +62,16 @@ namespace Lexer {
                 default: // name, name =, or error
                     if (isalpha(ch)) {
                         ct.string_value = ch;
-                        while (ip->get(ch) && isalnum(ch))
-                            ct.string_value += ch; // append ch to end of string_value
-                            ip->putback(ch);
-                            return ct={Kind::NAME};
+                        while (ip->get(ch)){
+                            if(isalnum(ch)){
+                                ct.string_value += ch;
+                             }else{
+                                ip->putback(ch);
+                            break;
+                        }
                     }
+                    return ct={Kind::NAME};
+                }
                 error("bad token");
                 return ct={Kind::PRINT};
                 }

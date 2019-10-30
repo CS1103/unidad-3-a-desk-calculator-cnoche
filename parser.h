@@ -63,7 +63,7 @@ double prim(bool get) {
             double& v = Table::table[ts.current().string_value]; // find the corresponding
             if (ts.get().kind == Kind::ASSIGN) 
                 v = expr(true); // ’=’ seen: assignment
-                return v;
+            return v;
         }
         case Kind::SUB: // suma y minus
             return -prim(true);
